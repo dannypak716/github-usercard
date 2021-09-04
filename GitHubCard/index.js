@@ -6,6 +6,7 @@ import regeneratorRuntime from "regenerator-runtime";
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+
 const cards = document.querySelector('.cards');
 
 (async () => {
@@ -43,7 +44,7 @@ const cards = document.querySelector('.cards');
     user, and adding that card to the DOM.
 */
 
-// const followersArray = [];
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
