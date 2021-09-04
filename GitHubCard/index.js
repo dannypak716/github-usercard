@@ -1,8 +1,24 @@
+import axios from 'axios'
+import regeneratorRuntime from "regenerator-runtime";
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+
+const cards = document.querySelector('.cards');
+
+(async () => {
+  try {
+    const userObject = await axios.get('https://api.github.com/users/dannypak716');
+    const data = userObject.data;
+    const newCard = cardCreator(data);
+    cards.appendChild(newCard);
+  } catch(err) {
+    console.log('Error getting data');
+  }
+})();
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -28,7 +44,7 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -39,16 +55,51 @@ const followersArray = [];
       <div class="card-info">
         <h3 class="name">{users name}</h3>
         <p class="username">{users user name}</p>
-        <p>Location: {users location}</p>
         <p>Profile:
-          <a href={address to users github page}>{address to users github page}</a>
+          <a href={URL to users github page}>{URL to users github page}</a>
         </p>
         <p>Followers: {users followers count}</p>
         <p>Following: {users following count}</p>
-        <p>Bio: {users bio}</p>
       </div>
     </div>
 */
+function cardCreator(userObject){
+  const card = document.createElement('div');
+  const avatarURL = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const name = document.createElement('h3');
+  const username = document.createElement('p');
+  const profile = document.createElement('p');
+  const profileURL = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+
+  card.classList.add('card');
+  avatarURL.src = userObject['avatar_url'];
+  cardInfo.classList.add('card-info');
+  name.classList.add('name');
+  name.textContent = `${userObject.name}`;
+  username.classList.add('username');
+  username.textContent = `${userObject['login']}`;
+  profile.textContent = 'Profile: ';
+  profileURL.href = userObject['html_url'];
+  followers.textContent = `Followers: ${userObject['followers']}`;
+  following.textContent = `Following: ${userObject['following']}`;
+
+  card.appendChild(avatarURL);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(profile);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  profile.appendChild(profileURL);
+
+  return card;
+}
+
+
+
 
 /*
   List of LS Instructors Github username's:
